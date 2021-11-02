@@ -15,7 +15,7 @@ const getById = async (id) => collection()
 
 const updateById = async (id, todo) => collection()
   .then((col) => col.updateOne({ _id: ObjectId(id) },
-    { $set: { todo } }));
+    { $currentDate: { timestamp: true }, $set: { todo } }));
 
 const deleteById = async (id) => collection()
   .then((col) => col.deleteOne({ _id: ObjectId(id) }));
