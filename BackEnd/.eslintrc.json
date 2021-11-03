@@ -1,10 +1,13 @@
 {
-    "extends": "trybe-backend",
-    "globals": {
-      "db": "writable"
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 13
     },
     "rules": {
-      "sonarjs/no-duplicate-string": ["error", 5]
     }
-  }
-  
+}

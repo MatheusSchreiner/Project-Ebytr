@@ -2,10 +2,10 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const collection = async () => connection()
-  .then((db) => db.collection('todo'));
+  .then((db) => db.collection('tasks'));
 
-const create = async (todo) => collection()
-  .then((col) => col.insertOne(todo));
+const create = async (task) => collection()
+  .then((col) => col.insertOne(task));
 
 const getAll = async () => collection()
   .then((col) => col.find().toArray());
