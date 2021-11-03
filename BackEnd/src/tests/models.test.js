@@ -2,61 +2,67 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-// const { getConnectionMock } = require('./mongoConnectionMock');
+const { getConnectionMock } = require('./mongoConnectionMock');
 
 const todoModel = require('../models/tasksModels');
 
 describe('Testes no todoModels', () => {
-  before(async () => {
-    const DBServer = await MongoMemoryServer.create();
-    const URLMock = await DBServer.getUri();
-    const OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
-
-    const connectionMock = await MongoClient.connect(URLMock, OPTIONS);
-
-    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
-  });
-
-  after(async () => {
-    sinon.restore();
-  });
-
-  // before(async () => {
-  //   const connectionMock = await getConnectionMock();
-  //   sinon.stub(MongoClient, 'connect').resolves(connectionMock);
-  // });
-
-  // after(() => {
-  //   MongoClient.connect.restore();
-  // })
 
   describe('Função create(), insere uma nova tarefa no banco de dados', () => {
-    const tarefa1 = {
+    const task = {
       task: 'tarefa',
       status: 'concluido',
     };
 
-    const tarefa2 = {
-      task: 'tarefa',
-      status: 'concluido',
-    };
-
+    before(async () => {
+      const connectionMock = await getConnectionMock();
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+    });
+  
+    after(() => {
+      MongoClient.connect.restore();
+    });
+  
     it('retorna um objeto', async () => {
-      const response = await todoModel.create(tarefa1);
-      console.log(response);
+      const { ops: [newTask] } = await todoModel.create(task);
+      expect(newTask).to.be.an('object');
+    });
+
+    it('objeto tem as chaves: "_id, task, status e timestamp"', async () => {
+      const { ops: [newTask] } = await todoModel.create(task);
+      expect(newTask).to.have.all.keys('_id','task', 'status', 'timestamp');
+    });
+  });
+
+  describe('Função getAll() exibe um array das tarefas', () => {
+    const task = {
+      task: 'tarefa',
+      status: 'concluido',
+      timestamp: Date(),
+    };
+
+    before(async () => {
+      const connectionMock = await getConnectionMock();
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      await connectionMock.db('modelExample').collection('tasks').insertOne(task);
+    });
+    after(() => {
+      MongoClient.connect.restore();
+    });
+
+    it('retorna um array', async () => {
+      const response = await todoModel.getAll();
+      expect(response).to.be.an('array');
+    });
+
+    it('o array contém um objeto', async () => {
+      const [response] = await todoModel.getAll();
       expect(response).to.be.an('object');
     });
 
-    // it('objeto tem propriedades: "acknowledged, insertedId"', async () => {
-    //   const response = await todoModel.create(tarefa2);
-    //   expect(response).to.have.all.keys('acknowledged', 'insertedId');
-    // });
-
-    it('objeto acknowledged é true', async () => {
-      const response = await todoModel.create(tarefa2);
-      expect(response.acknowledged).to.be(true);
+    it('o objeto contém as chaves "_id, task, status e timestamp"', async () => {
+      const [response] = await todoModel.getAll();
+      expect(response).to.have.all.keys('_id', 'task', 'status', 'timestamp');
     });
-
   });
 });

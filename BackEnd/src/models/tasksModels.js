@@ -4,8 +4,8 @@ const connection = require('./connection');
 const collection = async () => connection()
   .then((db) => db.collection('tasks'));
 
-const create = async (task) => collection()
-  .then((col) => col.insertOne(task));
+const create = async ({ task, status, timestamp = Date() }) => collection()
+  .then((col) => col.insertOne({ task, status, timestamp }));
 
 const getAll = async () => collection()
   .then((col) => col.find().toArray());
