@@ -17,9 +17,9 @@ const confirmUser = async (user, password) => {
   if (!confirm) throw err(messageErr.LOGIN_INCORRECT);
 };
 
-const validatorLogin = (email, password) => {
+const loginValidation = (email, password) => {
   loginEmail(email);
   loginPassword(password);
 };
 
-module.exports = { validatorLogin, confirmUser };
+module.exports = { loginValidation, confirmUser };
