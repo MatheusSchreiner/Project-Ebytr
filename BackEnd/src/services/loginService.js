@@ -1,11 +1,12 @@
 const models = require('../models/usersModel');
-const validatorLogin = require('../utils/validation/validationLogin');
+const { validatorLogin, confirmUser } = require('../utils/validation/validationLogin');
 const generateToken = require('../utils/token/generateToken');
 
 const login = async ({ email, password }) => {
-  await validatorLogin(email, password);
+  validatorLogin(email, password);
 
   const user = await models.getByEmail(email);
+  confirmUser(user, password);
 
   const token = generateToken(user);
   
