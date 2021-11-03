@@ -39,4 +39,4 @@ const validator = async (name, email, password, role) => {
   await userEmailAlreadyExist(email);
 };
 
-module.exports = { validator };
+module.exports = validator;

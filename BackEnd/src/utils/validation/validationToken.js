@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const modelLogin = require('../../models/');
 const messageErr = require('../err/messageErr');
 
-const { SECRET } = process.env.SECRET;
+const SECRET = process.env.SECRET || 'segredojwt';
 
 const err = (statusCode) => ({ statusCode });
 
@@ -18,11 +17,8 @@ module.exports = async (req, _res, next) => {
   const token = req.headers.authorization;
   if (!token) throw err(messageErr.MISSING_TOKEN);
 
-  const payload = await verifyToken(token);
+  const { _id, name, role } = await verifyToken(token);
   
-  const { _id } = await modelLogin.getByEmail(payload.email);
-  if (!_id) throw err(messageErr.INVALID_ENTRIES);
-
-  req.user = _id;
+  req.user = { _id, name, role };
   next();
 };
