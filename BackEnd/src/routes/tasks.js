@@ -1,11 +1,11 @@
 const route = require('express').Router();
 const rescue = require('express-rescue');
 const controller = require('../controllers/usersController');
-const validationToken = require('../utils/validation/validationToken');
+const tokenValidation = require('../utils/validation/tokenValidation');
 
-route.get('/', rescue(validationToken), rescue(controller.getAll));
-route.post('/', rescue(validationToken), rescue(controller.create));
-route.put('/:id', rescue(validationToken), rescue(controller.updateById));
-route.delete('/:id', rescue(validationToken), rescue(controller.deteleById));
+route.get('/', rescue(tokenValidation), rescue(controller.getAll));
+route.post('/', rescue(tokenValidation), rescue(controller.create));
+route.put('/:id', rescue(tokenValidation), rescue(controller.updateById));
+route.delete('/:id', rescue(tokenValidation), rescue(controller.deteleById));
 
 module.exports = route;

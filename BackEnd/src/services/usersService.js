@@ -1,5 +1,5 @@
 const models = require('../models/usersModel');
-const validatorUser = require('../utils/validation/validationsUsers');
+const validatorUser = require('../utils/validation/usersValidation');
 
 const create = async ({ name, email, password, role }) => {
   await validatorUser(name, email, password, role);
