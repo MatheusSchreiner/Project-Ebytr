@@ -4,6 +4,6 @@
     "rules": {
       "sonarjs/no-duplicate-string": ["error", 5]
     },
-    "eslintIgnore": ["./src/tests", "./node_modules"]
+    // "eslintIgnore": ["./src/tests", "./node_modules"]
   }
   
