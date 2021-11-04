@@ -20,7 +20,10 @@ const updateById = async ({ _id, task, status }, user) => {
   taskValidation(task, status);
   await taskUserValidation(_id, user);
   return models.updateById(_id, task, status, user)
-    .then((data) => ({ status: 200, data }));
+    .then(() => {
+      const data = {_id, task, status, timestamps: Date(), user };
+      return ({ status: 200, data });
+  });
 };
 
 const deleteById = async ({ id }, user) => {
