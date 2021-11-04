@@ -17,8 +17,8 @@ module.exports = async (req, _res, next) => {
   const token = req.headers.authorization;
   if (!token) throw err(messageErr.MISSING_TOKEN);
 
-  const { _id, name, role } = await verifyToken(token);
+  const { _id, name } = await verifyToken(token);
   
-  req.user = { _id, name, role };
+  req.user = { _id, name };
   next();
 };

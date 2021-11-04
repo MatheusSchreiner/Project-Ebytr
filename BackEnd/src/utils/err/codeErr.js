@@ -29,8 +29,13 @@ module.exports = {
     message: 'jwt malformed',
   },
 
-  recipeNotFound: {
+  idNotValid: {
     status: 404,
-    message: 'recipe not found',
+    message: 'Id not valid',
+  },
+
+  userNotPermission: {
+    status: 409,
+    message: 'Permission denied',
   },
 };

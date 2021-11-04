@@ -30,7 +30,7 @@ const userEmailAlreadyExist = async (email) => {
   if (response) throw err(messageErr.EMAIL_REGISTRED);
 };
 
-const validator = async (name, email, password, role) => {
+const usersValidation = async (name, email, password, role) => {
   userName(name);
   userRole(role);
   userEmail(email);
@@ -39,4 +39,4 @@ const validator = async (name, email, password, role) => {
   await userEmailAlreadyExist(email);
 };
 
-module.exports = validator;
+module.exports = usersValidation;

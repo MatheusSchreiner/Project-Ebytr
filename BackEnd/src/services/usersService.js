@@ -1,8 +1,8 @@
 const models = require('../models/usersModel');
-const validatorUser = require('../utils/validation/validationsUsers');
+const usersValidation = require('../utils/validation/userValidation');
 
 const create = async ({ name, email, password, role }) => {
-  await validatorUser(name, email, password, role);
+  await usersValidation(name, email, password, role);
 
   return models.create(name, email, password, role)
       .then((data) => {
