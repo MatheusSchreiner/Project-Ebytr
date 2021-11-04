@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { MongoClient } = require('mongodb');
 const { getConnectionMock } = require('./mongoConnectionMock');
 
-const todoModel = require('../models/tasksModels');
+const todoModel = require('../../models/tasksModel');
 
 describe('Testes no todoModels', () => {
 
@@ -29,7 +29,7 @@ describe('Testes no todoModels', () => {
 
     it('objeto tem as chaves: "_id, task, status e timestamp"', async () => {
       const { ops: [newTask] } = await todoModel.create(task);
-      expect(newTask).to.have.all.keys('_id','task', 'status', 'timestamp');
+      expect(newTask).to.have.all.keys('_id','task', 'status', 'timestamp', 'user');
     });
   });
 
@@ -61,7 +61,7 @@ describe('Testes no todoModels', () => {
 
     it('o objeto contém as chaves "_id, task, status e timestamp"', async () => {
       const [response] = await todoModel.getAll();
-      expect(response).to.have.all.keys('_id', 'task', 'status', 'timestamp');
+      expect(response).to.have.all.keys('_id', 'task', 'status', 'timestamp', 'user');
     });
   });
 });
