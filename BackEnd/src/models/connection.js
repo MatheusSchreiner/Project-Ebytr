@@ -1,8 +1,9 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 const OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
-const MONGO_DB_URL = 'mongodb://localhost:27017/TodoEbytr';
-const DB_NAME = 'TodoEbytr';
+const MONGO_DB_URL = process.env.MONGO_DB_URL;
+const DB_NAME = process.env.DB_NAME;
 
 module.exports = () =>
   MongoClient.connect(MONGO_DB_URL, OPTIONS)

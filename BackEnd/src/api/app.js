@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 
 const err = require('../middlewares/err');
 const users = require('../routes/users');
@@ -7,7 +8,7 @@ const tasks = require('../routes/tasks');
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use('/users', users);
