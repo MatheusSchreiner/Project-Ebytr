@@ -1,9 +1,9 @@
 {
-    "root": true,
-    "extends": ["trybe-backend"],
+    "extends": "trybe-backend",
+    "globals": {
+      "db": "writable"
+    },
     "rules": {
       "sonarjs/no-duplicate-string": ["error", 5]
-    },
-    // "eslintIgnore": ["./src/tests", "./node_modules"]
+    }
   }
-  
